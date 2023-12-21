@@ -1,6 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://d1is7f0sk7dy6"]
+[gd_scene load_steps=17 format=3 uid="uid://d1is7f0sk7dy6"]
 
 [ext_resource type="PackedScene" uid="uid://db1bjk4ckxt1k" path="res://controllers/fps_controller.tscn" id="1_1vhnd"]
+[ext_resource type="PackedScene" uid="uid://lh80ctoix77" path="res://components/Fastening.tscn" id="1_74wvm"]
 
 [sub_resource type="Environment" id="Environment_fo6pf"]
 
@@ -22,6 +23,13 @@ material = SubResource("StandardMaterial3D_laq8s")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wgdo0"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_vf6m2"]
+radius = 0.05
+
+[sub_resource type="SphereMesh" id="SphereMesh_kuik7"]
+radius = 0.05
+height = 0.1
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ixxkc"]
 albedo_color = Color(0, 1, 0.0509804, 1)
 
@@ -41,6 +49,7 @@ points = PackedVector3Array(1, -0.5, 1, -1, -0.5, 1, -1, 0.5, 1, -1, 0.5, -1, -1
 environment = SubResource("Environment_fo6pf")
 
 [node name="Floor" type="MeshInstance3D" parent="."]
+layers = 2
 mesh = SubResource("BoxMesh_x7al2")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Floor"]
@@ -51,6 +60,7 @@ shape = SubResource("BoxShape3D_pvx56")
 
 [node name="Box" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.75, 0)
+layers = 2
 mesh = SubResource("BoxMesh_4olxj")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Box"]
@@ -59,8 +69,21 @@ physics_material_override = SubResource("PhysicsMaterial_k2eqo")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Box/StaticBody3D"]
 shape = SubResource("BoxShape3D_wgdo0")
 
+[node name="Fastening" parent="Box" groups=["fastening"] instance=ExtResource("1_74wvm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.500061, 0, 0)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Box/Fastening"]
+shape = SubResource("SphereShape3D_vf6m2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Box/Fastening/CollisionShape3D"]
+mesh = SubResource("SphereMesh_kuik7")
+skeleton = NodePath("../..")
+
 [node name="ramp" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -3)
+layers = 2
 mesh = SubResource("PrismMesh_pbg6d")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="ramp"]

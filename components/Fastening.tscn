@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://lh80ctoix77"]
+
+[node name="Fastening" type="StaticBody3D"]
