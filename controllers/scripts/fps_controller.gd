@@ -8,6 +8,8 @@ const JUMP_VELOCITY = 4.5
 @export var TILT_UPPER_LIMIT := deg_to_rad(90.0)
 @export var CAMERA_CONTROLLER: Camera3D
 
+var clipped := false
+
 var _mouse_input: bool = false
 var _mouse_rotation: Vector3
 var _rotation_input: float
@@ -106,3 +108,4 @@ func attach_clip(target: Node3D):
 	var clip := preload("res://components/Clip.tscn").instantiate()
 	add_child(clip)
 	clip.init(self, target)
+	clipped = true

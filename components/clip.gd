@@ -4,7 +4,6 @@ class_name Clip
 
 var start: CharacterBody3D
 var end: Node3D
-var last_dist := 1.0
 
 @export var max_length: float = 5.0
 
@@ -28,5 +27,5 @@ func _process(delta):
 	
 	# set length
 	var dist := start_pos.distance_to(end_pos)
-	global_scale(Vector3(dist / last_dist, 1, 1))
-	last_dist = dist
+	scale.z = dist
+	print(dist)
